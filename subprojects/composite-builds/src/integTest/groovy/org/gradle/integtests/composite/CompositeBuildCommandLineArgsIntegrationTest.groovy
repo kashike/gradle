@@ -19,7 +19,6 @@ package org.gradle.integtests.composite
 import org.gradle.integtests.fixtures.build.BuildTestFile
 import org.gradle.integtests.fixtures.resolve.ResolveTestFixture
 import org.gradle.test.fixtures.maven.MavenModule
-import spock.lang.Ignore
 
 /**
  * Tests for resolving dependency artifacts with substitution within a composite build.
@@ -129,18 +128,6 @@ includeBuild '../buildB'
 
         when:
         execute(buildA, ":checkDeps", ["--settings-file", "settings-copy.gradle"])
-
-        then:
-        assertTaskExecuted(":buildB", ":jar")
-    }
-
-    @Ignore
-    def "does not exclude tasks when building artifact for included build"() {
-        given:
-        dependency 'org.test:buildB:1.0'
-
-        when:
-        execute(buildA, ":checkDeps", ["--exclude-task", "jar"])
 
         then:
         assertTaskExecuted(":buildB", ":jar")
